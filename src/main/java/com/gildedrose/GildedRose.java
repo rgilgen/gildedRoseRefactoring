@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 import static com.gildedrose.ItemName.*;
+import static java.lang.Math.min;
 
 class GildedRose {
     private static final int MAX_QUALITY = 50;
@@ -19,50 +20,50 @@ class GildedRose {
      */
     public void updateQuality() {
         for (Item item : items) {
-            if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                if (item.sellIn > 10) {
-                    increaseQuality(item);
-                }
-                else if (item.sellIn < 11 && item.sellIn > 5) {
-                    increaseQuality(item);
-                    increaseQuality(item);
-                }
+            updateItemQuality(item);
+        }
+    }
 
-                else {
-                    increaseQuality(item);
-                    increaseQuality(item);
-                    increaseQuality(item);
-                }
-            } else if (item.name.equals(AGED_BRIE.getValue())) {
+    private void updateItemQuality(Item item) {
+        if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
+            if (item.sellIn > 10) {
                 increaseQuality(item);
-            } else if (!item.name.equals(SULFURAS.getValue())) {
-                decreaseQuality(item);
+            } else if (item.sellIn > 5) {
+                increaseQualityBy(item, 2);
+            } else {
+                increaseQualityBy(item, 3);
             }
+        } else if (item.name.equals(AGED_BRIE.getValue())) {
+            increaseQuality(item);
+        } else if (!item.name.equals(SULFURAS.getValue())) {
+            decreaseQuality(item);
+        }
 
-            if (!item.name.equals(SULFURAS.getValue())) {
-                item.sellIn = item.sellIn - 1;
-            }
+        if (!item.name.equals(SULFURAS.getValue())) {
+            item.sellIn = item.sellIn - 1;
+        }
 
-            if (item.sellIn < 0) {
-                if (item.name.equals(AGED_BRIE.getValue())) {
-                    increaseQuality(item);
+        if (item.sellIn < 0) {
+            if (item.name.equals(AGED_BRIE.getValue())) {
+                increaseQuality(item);
+            } else {
+                if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
+                    item.quality = 0;
                 } else {
-                    if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                        item.quality = 0;
-                    } else {
-                        if (!item.name.equals(SULFURAS.getValue())) {
-                            decreaseQuality(item);
-                        }
+                    if (!item.name.equals(SULFURAS.getValue())) {
+                        decreaseQuality(item);
                     }
                 }
             }
         }
     }
 
+    private void increaseQualityBy(Item item, int amount) {
+        item.quality = min(item.quality + amount, MAX_QUALITY);
+    }
+
     private void increaseQuality(Item item) {
-        if (item.quality < MAX_QUALITY) {
-            item.quality = item.quality + 1;
-        }
+        increaseQualityBy(item,1);
     }
 
     private void decreaseQuality(Item item) {
