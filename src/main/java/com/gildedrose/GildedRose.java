@@ -3,6 +3,7 @@ package com.gildedrose;
 import static com.gildedrose.ItemName.*;
 
 class GildedRose {
+    private static final int MAX_QUALITY = 50;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -25,21 +26,15 @@ class GildedRose {
                     }
                 }
             } else {
-                if (items[i].quality < 50) {
-                    increaseQuality(items[i]);
+                increaseQuality(items[i]);
 
-                    if (items[i].name.equals(BACKSTAGE_PASSES.getValue())) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                increaseQuality(items[i]);
-                            }
-                        }
+                if (items[i].name.equals(BACKSTAGE_PASSES.getValue())) {
+                    if (items[i].sellIn < 11) {
+                        increaseQuality(items[i]);
+                    }
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                increaseQuality(items[i]);
-                            }
-                        }
+                    if (items[i].sellIn < 6) {
+                        increaseQuality(items[i]);
                     }
                 }
             }
@@ -60,16 +55,16 @@ class GildedRose {
                         items[i].quality = 0;
                     }
                 } else {
-                    if (items[i].quality < 50) {
-                        increaseQuality(items[i]);
-                    }
+                    increaseQuality(items[i]);
                 }
             }
         }
     }
 
     private void increaseQuality(Item item) {
-        item.quality = item.quality + 1;
+        if (item.quality < MAX_QUALITY) {
+            item.quality = item.quality + 1;
+        }
     }
 
     private void decreaseQuality(Item item) {
