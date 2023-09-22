@@ -19,27 +19,27 @@ class GildedRose {
      * Naming
      * Index Naming
      */
-    public void updateQuality() {
+    public void dailyUpdate() {
         for (Item item : items) {
-            updateItemQuality(item);
+            dailyItemUpdate(item);
         }
     }
 
-    private void updateItemQuality(Item item) {
+    private void dailyItemUpdate(Item item) {
         processQuality(item);
         decreaseSellIn(item);
-        processExpired(item);
+        if (item.sellIn < 0) {
+            processExpired(item);
+        }
     }
 
     private void processExpired(Item item) {
-        if (item.sellIn < 0) {
-            if (item.name.equals(AGED_BRIE.getValue())) {
-                increaseQuality(item);
-            } else if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                item.quality = 0;
-            } else if (!item.name.equals(SULFURAS.getValue())) {
-                decreaseQualityBy(item, 1);
-            }
+        if (item.name.equals(AGED_BRIE.getValue())) {
+            increaseQuality(item);
+        } else if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
+            item.quality = 0;
+        } else if (!item.name.equals(SULFURAS.getValue())) {
+            decreaseQualityBy(item, 1);
         }
     }
 

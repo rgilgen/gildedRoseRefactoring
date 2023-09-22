@@ -27,7 +27,7 @@ public class Program {
                 System.out.println(item);
             }
             System.out.println();
-            app.updateQuality();
+            app.dailyUpdate();
         }
     }
 }
