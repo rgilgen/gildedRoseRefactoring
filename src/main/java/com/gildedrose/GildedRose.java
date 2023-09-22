@@ -25,6 +25,30 @@ class GildedRose {
     }
 
     private void updateItemQuality(Item item) {
+        processQuality(item);
+        decreaseSellIn(item);
+        processExpired(item);
+    }
+
+    private void processExpired(Item item) {
+        if (item.sellIn < 0) {
+            if (item.name.equals(AGED_BRIE.getValue())) {
+                increaseQuality(item);
+            } else if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
+                item.quality = 0;
+            } else if (!item.name.equals(SULFURAS.getValue())) {
+                decreaseQuality(item);
+            }
+        }
+    }
+
+    private void decreaseSellIn(Item item) {
+        if (!item.name.equals(SULFURAS.getValue())) {
+            item.sellIn = item.sellIn - 1;
+        }
+    }
+
+    private void processQuality(Item item) {
         if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
             if (item.sellIn > 10) {
                 increaseQuality(item);
@@ -38,24 +62,6 @@ class GildedRose {
         } else if (!item.name.equals(SULFURAS.getValue())) {
             decreaseQuality(item);
         }
-
-        if (!item.name.equals(SULFURAS.getValue())) {
-            item.sellIn = item.sellIn - 1;
-        }
-
-        if (item.sellIn < 0) {
-            if (item.name.equals(AGED_BRIE.getValue())) {
-                increaseQuality(item);
-            } else {
-                if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                    item.quality = 0;
-                } else {
-                    if (!item.name.equals(SULFURAS.getValue())) {
-                        decreaseQuality(item);
-                    }
-                }
-            }
-        }
     }
 
     private void increaseQualityBy(Item item, int amount) {
@@ -63,7 +69,7 @@ class GildedRose {
     }
 
     private void increaseQuality(Item item) {
-        increaseQualityBy(item,1);
+        increaseQualityBy(item, 1);
     }
 
     private void decreaseQuality(Item item) {
