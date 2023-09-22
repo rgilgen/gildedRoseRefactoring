@@ -18,26 +18,26 @@ class GildedRose {
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
             if (!items[i].name.equals(AGED_BRIE.getValue())
-                    && !items[i].name.equals(BACKSTAGE_PASSES.getValue())) {
+                && !items[i].name.equals(BACKSTAGE_PASSES.getValue())) {
                 if (items[i].quality > 0) {
                     if (!items[i].name.equals(SULFURAS.getValue())) {
-                        items[i].quality = items[i].quality - 1;
+                        decreaseQuality(items[i]);
                     }
                 }
             } else {
                 if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+                    increaseQuality(items[i]);
 
                     if (items[i].name.equals(BACKSTAGE_PASSES.getValue())) {
                         if (items[i].sellIn < 11) {
                             if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                                increaseQuality(items[i]);
                             }
                         }
 
                         if (items[i].sellIn < 6) {
                             if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                                increaseQuality(items[i]);
                             }
                         }
                     }
@@ -53,18 +53,26 @@ class GildedRose {
                     if (!items[i].name.equals(BACKSTAGE_PASSES.getValue())) {
                         if (items[i].quality > 0) {
                             if (!items[i].name.equals(SULFURAS.getValue())) {
-                                items[i].quality = items[i].quality - 1;
+                                decreaseQuality(items[i]);
                             }
                         }
                     } else {
-                        items[i].quality = items[i].quality - items[i].quality;
+                        items[i].quality = 0;
                     }
                 } else {
                     if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
+                        increaseQuality(items[i]);
                     }
                 }
             }
         }
+    }
+
+    private void increaseQuality(Item item) {
+        item.quality = item.quality + 1;
+    }
+
+    private void decreaseQuality(Item item) {
+        item.quality = item.quality - 1;
     }
 }
