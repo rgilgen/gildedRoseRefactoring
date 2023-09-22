@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 import static com.gildedrose.ItemName.*;
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 class GildedRose {
@@ -37,7 +38,7 @@ class GildedRose {
             } else if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
                 item.quality = 0;
             } else if (!item.name.equals(SULFURAS.getValue())) {
-                decreaseQuality(item);
+                decreaseQualityBy(item, 1);
             }
         }
     }
@@ -60,10 +61,9 @@ class GildedRose {
         } else if (item.name.equals(AGED_BRIE.getValue())) {
             increaseQuality(item);
         } else if (item.name.equals(CONJURED.getValue())) {
-            decreaseQuality(item);
-            decreaseQuality(item);
+            decreaseQualityBy(item, 2);
         } else if (!item.name.equals(SULFURAS.getValue())) {
-            decreaseQuality(item);
+            decreaseQualityBy(item, 1);
         }
     }
 
@@ -75,9 +75,7 @@ class GildedRose {
         increaseQualityBy(item, 1);
     }
 
-    private void decreaseQuality(Item item) {
-        if (item.quality > MIN_QUALITY) {
-            item.quality = item.quality - 1;
-        }
+    private void decreaseQualityBy(Item item, int amount) {
+        item.quality = max(item.quality - amount, MIN_QUALITY);
     }
 }
