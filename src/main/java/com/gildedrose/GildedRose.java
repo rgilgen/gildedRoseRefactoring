@@ -4,6 +4,7 @@ import static com.gildedrose.ItemName.*;
 
 class GildedRose {
     private static final int MAX_QUALITY = 50;
+    public static final int MIN_QUALITY = 0;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -20,10 +21,8 @@ class GildedRose {
         for (Item item : items) {
             if (!item.name.equals(AGED_BRIE.getValue())
                 && !item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                if (item.quality > 0) {
-                    if (!item.name.equals(SULFURAS.getValue())) {
-                        decreaseQuality(item);
-                    }
+                if (!item.name.equals(SULFURAS.getValue())) {
+                    decreaseQuality(item);
                 }
             } else {
                 increaseQuality(item);
@@ -46,10 +45,8 @@ class GildedRose {
             if (item.sellIn < 0) {
                 if (!item.name.equals(AGED_BRIE.getValue())) {
                     if (!item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                        if (item.quality > 0) {
-                            if (!item.name.equals(SULFURAS.getValue())) {
-                                decreaseQuality(item);
-                            }
+                        if (!item.name.equals(SULFURAS.getValue())) {
+                            decreaseQuality(item);
                         }
                     } else {
                         item.quality = 0;
@@ -68,6 +65,8 @@ class GildedRose {
     }
 
     private void decreaseQuality(Item item) {
-        item.quality = item.quality - 1;
+        if (item.quality > MIN_QUALITY) {
+            item.quality = item.quality - 1;
+        }
     }
 }
