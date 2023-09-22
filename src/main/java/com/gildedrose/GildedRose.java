@@ -10,19 +10,22 @@ class GildedRose {
 
     public GildedRose(Item[] items) {
         for (Item item : items) {
-            if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
-                this.items.add(new BackstageItem(item));
-            } else if (item.name.equals(AGED_BRIE.getValue())) {
-                this.items.add(new AgedBrie(item));
-            } else if (item.name.equals(SULFURAS.getValue())) {
-                this.items.add(new Sulfuras(item));
-            } else if (item.name.equals(CONJURED.getValue())) {
-                this.items.add(new Conjured(item));
-            } else {
-                this.items.add(new BaseItem(item));
-            }
+            mapToGildetItem(item);
         }
+    }
 
+    private void mapToGildetItem(Item item) {
+        if (item.name.equals(BACKSTAGE_PASSES.getValue())) {
+            this.items.add(new BackstageItem(item));
+        } else if (item.name.equals(AGED_BRIE.getValue())) {
+            this.items.add(new AgedBrie(item));
+        } else if (item.name.equals(SULFURAS.getValue())) {
+            this.items.add(new Sulfuras(item));
+        } else if (item.name.equals(CONJURED.getValue())) {
+            this.items.add(new Conjured(item));
+        } else {
+            this.items.add(new BaseItem(item));
+        }
     }
 
     /**
