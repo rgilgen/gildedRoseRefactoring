@@ -46,4 +46,9 @@ class GildedRose {
     }
 
 
+    public void printItems() {
+        for (GildedItem item : items) {
+            System.out.println(item);
+        }
+    }
 }
