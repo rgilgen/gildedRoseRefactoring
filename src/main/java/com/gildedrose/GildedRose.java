@@ -59,6 +59,9 @@ class GildedRose {
             }
         } else if (item.name.equals(AGED_BRIE.getValue())) {
             increaseQuality(item);
+        } else if (item.name.equals(CONJURED.getValue())) {
+            decreaseQuality(item);
+            decreaseQuality(item);
         } else if (!item.name.equals(SULFURAS.getValue())) {
             decreaseQuality(item);
         }

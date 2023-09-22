@@ -5,7 +5,9 @@ public enum ItemName {
     AGED_BRIE("Aged Brie"),
     ELIXIR_MONGOOSE("Elixir of the Mongoose"),
     SULFURAS("Sulfuras, Hand of Ragnaros"),
-    BACKSTAGE_PASSES("Backstage passes to a TAFKAL80ETC concert");
+    BACKSTAGE_PASSES("Backstage passes to a TAFKAL80ETC concert"),
+
+    CONJURED("Conjured Mana Cake");
 
     private final String value;
 
